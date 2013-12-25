@@ -1,0 +1,28 @@
+---
+# 使い方:
+#   ansible-playbook -i <(echo 10.x.x.x) -u root -k site.yml \
+#     --extra-vars "main_username=username main_password=`openssl passwd -salt salty -1 password` docroot=/var/www/html/docroot permit_network=10.0.0.0/8"
+# 備考:
+#   - 10.x.x.xは設定対象のホストのIPアドレスを指定してください
+#     rootでsshに接続しようとします
+#   - main_usernameで指定した名前のユーザ・グループが作成され、パスワードはpasswordになります
+#   - docrootで指定したディレクトリがhttpdのDocumentRootとなり
+#     所有者・所有グループはmain_usernameになります
+#   - PostgreSQLにはlocalhostからはID/PASS:postgres/なし
+#     permit_networkからはID/PASS:postgre/postgresでアクセスできます
+#   - PHP OPcacheはソースからコンパイルしてインストールされています
+#     PHP APCはインストールされません(PHP 5.4は未対応のため)
+#   - 実行後は一度再起動してください
+- name: for CakePHP on LAPP (CentOS 6.5, PostgreSQL 9.2, PHP 5.4) Ver. 20131225
+  hosts: all
+  vars:
+    l_main_username: "{{ main_username }}"
+    l_main_password: "{{ main_password }}"
+    l_docroot: "{{ docroot }}"
+    l_permit_network: "{{ permit_network }}"
+  user: root
+  roles:
+    - common
+    - apache
+    - postgresql92
+    - php54
