@@ -36,7 +36,7 @@
   yum: name="http://ftp.riken.jp/Linux/fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm" state=installed
 # SCLをインストール
 - name: install SCL
-  get_url: url="http://dev.centos.org/centos/6/SCL/scl.repo" dest=/etc/yum.repos.d
+  yum: name=centos-release-SCL state=present
 # ntpをインストール
 - name: install ntp
   yum: name=ntp state=present
