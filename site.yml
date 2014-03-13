@@ -6,10 +6,10 @@
 #   MAIN_PASSWORD=password
 #   DOCROOT=/var/www/html/htdocs
 #   DBROOT=/opt/rh/postgresql92/root/var/lib/pgsql
-#   PERMITE_NETWORK=10.0.0.0/8
+#   PERMIT_NETWORK=10.0.0.0/8
 #   CAKE_ENV_MODE=development
 #   ansible-playbook -i <(echo ${TARGET_HOST}) -u root -k site.yml \
-#     --extra-vars "main_username=${MAIN_USERNAME} main_password=`openssl passwd -salt salty -1 ${MAIN_PASSWORD}` docroot=${DOCROOT} dbroot=${DBROOT} permit_network=${PERMITE_NETWORK} cake_env_mode=${CAKE_ENV_MODE}"
+#     --extra-vars "main_username=${MAIN_USERNAME} main_password=`openssl passwd -salt salty -1 ${MAIN_PASSWORD}` docroot=${DOCROOT} dbroot=${DBROOT} permit_network=${PERMIT_NETWORK} cake_env_mode=${CAKE_ENV_MODE}"
 # 備考:
 #   - TARGET_HOSTは設定対象のホストのIPアドレスを指定してください
 #     rootでsshに接続しようとします
@@ -21,9 +21,9 @@
 #     PHP APCはインストールされません(PHP 5.4は未対応のため)
 #   - CAKE_ENV_MODEで指定した値が環境変数CAKE_ENV_MODEの値に設定されます
 #   - DBROOTで指定したディレクトリがPostgreSQLのデータディレクトリとなります
-#   - PERMITE_NETWORKで指定したネットワーク範囲からPostgreSQLに接続可能です
+#   - PERMIT_NETWORKで指定したネットワーク範囲からPostgreSQLに接続可能です
 #   - PostgreSQLには、localhostからはID/PASS:postgres/なし、
-#     PERMITE_NETWORKからはID/PASS:postgre/postgresでアクセスできます
+#     PERMIT_NETWORKからはID/PASS:postgre/postgresでアクセスできます
 #   - 実行後は一度再起動してください
 #
 - name: for CakePHP on LAPP (CentOS 6.5, PostgreSQL 9.2, PHP 5.4) Ver. 20140227
@@ -33,4 +33,4 @@
     - { role: centos6-common, main_username: "{{ main_username }}", main_password: "{{ main_password }}" }
     - { role: centos6-apache, main_username: "{{ main_username }}", docroot: "{{ docroot }}", cake_env_mode: "{{ cake_env_mode }}" }
     - { role: centos6-scl-php54 }
-    - { role: centos6-scl-postgresql92, dbroot: "{{ dbroot }}", permite_network: "{{ permite_network }}" }
+    - { role: centos6-scl-postgresql92, dbroot: "{{ dbroot }}", permit_network: "{{ permit_network }}" }
